@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<Integer> ll=new LinkedList<>();
+    public int minDiffInBST(TreeNode root) {
+        printInOrder(root);
+        int min=ll.get(ll.size()-1);
+        for(int i=0;i<ll.size()-1;i++){
+            int curr= ll.get(i+1)-ll.get(i);
+            if(min>curr){
+                min=curr;
+            }
+        }
+        return min;
+    }
+    public  void printInOrder(TreeNode node){
+        if (node == null)
+            return;
+ 
+        /* first recur on left child */
+        printInOrder(node.left);
+
+        ll.add(node.val);
+ 
+        /* now recur on right child */
+        printInOrder(node.right);
+    }
+}
