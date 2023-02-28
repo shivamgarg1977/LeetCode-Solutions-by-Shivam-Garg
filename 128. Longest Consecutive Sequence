@@ -1,0 +1,26 @@
+class Solution {
+    public int longestConsecutive(int[] arr) {
+        if(arr.length<=1){
+            return arr.length;
+        }
+     TreeMap<Integer,Integer> treeMap=new TreeMap<>();
+		for(int i=0;i<arr.length;i++){
+			treeMap.putIfAbsent(arr[i],i);
+		}
+		int prev=treeMap.firstKey();
+		int count=1;
+		int max=0;
+		for(Map.Entry<Integer,Integer> map: treeMap.entrySet()){
+			if(map.getKey() == prev + 1){
+				count+=1;
+			}else{
+				count=0;
+			}
+			max=Math.max(count,max);
+			prev=map.getKey();
+		}
+        return Math.max(count,max)+1;
+
+	   
+    }
+}
