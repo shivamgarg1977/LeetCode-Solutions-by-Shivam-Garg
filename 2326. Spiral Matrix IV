@@ -1,0 +1,76 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int[][] spiralMatrix(int m, int n, ListNode head) {
+        int[][] matrix=new int[m][n];
+        ListNode curr=head;
+        int topRow=0;
+        int bottomRow=m-1;
+        int startCol=0;
+        int endCol=n-1;
+        
+        while(topRow<=bottomRow && startCol<=endCol){
+            
+            //top
+            for(int i=startCol;i<=endCol;i++){
+                if(curr==null){
+                    matrix[topRow][i]=-1;
+                }else{
+                    matrix[topRow][i]=curr.val;
+                    curr=curr.next;
+                }
+            }
+            
+            //right
+            for(int j=topRow+1;j<=bottomRow;j++){
+                if(curr==null){
+                    matrix[j][endCol]=-1;
+                }else{
+                    matrix[j][endCol]=curr.val;
+                    curr=curr.next;
+                }
+            }
+            
+            //bottom
+            for(int i=endCol-1;i>=startCol;i--){
+                if(topRow==bottomRow){
+                    break;
+                }
+                if(curr==null){
+                    matrix[bottomRow][i]=-1;
+                }else{
+                    matrix[bottomRow][i]=curr.val;
+                    curr=curr.next;
+                }
+            }
+            
+            //left 
+            for(int j=bottomRow-1;j>=topRow+1;j--){
+                if(startCol==endCol){
+                    break;
+                }
+                if(curr==null){
+                    matrix[j][startCol]=-1;
+                }else{
+                    matrix[j][startCol]=curr.val;
+                    curr=curr.next;
+                }
+            }
+            
+            topRow++;
+            bottomRow--;
+            startCol++;
+            endCol--;
+        }
+        
+        return matrix;
+    }
+}
