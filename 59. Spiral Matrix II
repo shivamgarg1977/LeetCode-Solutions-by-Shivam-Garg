@@ -1,0 +1,48 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+     int[][] matrix=new int[n][n];
+        int start=1;
+        
+        int topRow=0;
+        int bottomRow=n-1;
+        int startCol=0;
+        int endCol=n-1;
+        
+        while(topRow<=bottomRow && startCol<=endCol){
+            
+            //top
+            for(int i=startCol;i<=endCol;i++){
+                matrix[topRow][i]=start++;
+            }
+            
+            //right
+            for(int j=topRow+1;j<=bottomRow;j++){
+                matrix[j][endCol]=start++;
+            }
+            
+            //bottom
+            for(int i=endCol-1;i>=startCol;i--){
+                if(topRow==bottomRow){
+                    break;
+                }
+                matrix[bottomRow][i]=start++;
+            }
+            
+            //left 
+            for(int j=bottomRow-1;j>=topRow+1;j--){
+                if(startCol==endCol){
+                    break;
+                }
+                matrix[j][startCol]=start++;
+            }
+            
+            topRow++;
+            bottomRow--;
+            startCol++;
+            endCol--;
+        }
+        
+        return matrix;
+        
+    }
+}
