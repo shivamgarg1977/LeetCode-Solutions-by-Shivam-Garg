@@ -1,0 +1,43 @@
+class Solution {
+    public List<List<Integer>> ll=new ArrayList<>();
+    public List<List<Integer>> threeSum(int[] nums) {
+       for(int i=0;i<nums.length;i++){
+           Arrays.sort(nums);
+          if(i==0 || nums[i-1]!=nums[i]){
+              twoSum(nums,0-nums[i],i+1,nums.length-1);
+          } 
+       }
+        return ll;
+        
+    }
+    public void twoSum(int[] nums, int target,int start,int end) {
+        int first=start-1;
+        while(start<end){
+            if(nums[start]+nums[end]==target){
+                List<Integer> l=new ArrayList<>();
+                l.add(nums[first]);
+                l.add(nums[start]);
+                l.add(nums[end]);
+                
+                ll.add(l);
+                
+                while(start<end && nums[start]==nums[start+1]){
+                start++;
+            }
+            
+            while(start<end && nums[end]==nums[end-1]){
+                end--;
+            }
+                start++;end--;
+            }else if(nums[start]+nums[end]>target){
+                end--;
+            }else{
+                start++;
+            }
+            
+            
+            
+        }
+        
+    }
+}
