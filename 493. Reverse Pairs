@@ -1,0 +1,66 @@
+class Solution {
+    public int reversePairs(int[] nums) {
+    return divide(nums,0,nums.length-1);
+    }
+    int divide(int[] arr, int start,int end){
+		if(start<end){
+			int mid= start+(end-start)/2;
+			int left=divide(arr,start,mid);
+			int right=divide(arr,mid+1,end);
+
+			int merge=merge(arr,start,end,mid);
+
+			return left+right+merge;
+		}
+		return 0;
+	}
+
+
+	int merge(int[] arr, int start, int end,int mid){
+		int count=0;
+		int m=mid+1-start;
+		int n=end-mid;
+
+		int[] left=new int[m];
+		int[] right=new int[n];
+		for(int i=0;i<m;i++){
+			left[i]=arr[i+start];
+		}
+		for(int i=0;i<n;i++){
+			right[i]=arr[mid+1+i];
+		}
+
+		int k=start;
+		int i=start;
+		int j=mid+1;
+		while(i<=mid && j<=end){
+
+				if((long)arr[i]>(long)2*arr[j]){
+					count+= mid-i+1;
+					j++;
+				}else{
+				i++;
+			}
+		}
+
+		i=0;
+		j=0;
+		while(i<m && j<n){
+			if(left[i]>right[j]){
+				arr[k++]=right[j++];
+			}else{
+				arr[k++]=left[i++];
+			}
+		}
+
+
+		while(i<m){
+			arr[k++]=left[i++];
+		}
+		while(j<n){
+			arr[k++]=right[j++];
+		}
+		return count;
+
+	}
+}
