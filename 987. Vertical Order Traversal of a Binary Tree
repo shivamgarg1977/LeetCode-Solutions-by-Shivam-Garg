@@ -1,0 +1,76 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        if(root==null){
+            return new ArrayList();
+        }
+        List<List<Integer>> ll=new ArrayList<>();
+        TreeMap<Integer, TreeMap < Integer, PriorityQueue < Integer >>> map=new TreeMap<>();
+        Queue<Model> queue=new LinkedList<>();
+        queue.add(new Model(root,0,0));
+
+        while(!queue.isEmpty()){
+            int size=queue.size();
+
+            for(int i=0;i<size;i++){
+                Model m=queue.remove();
+                int x=m.distance;
+                int y=m.level;
+               if (!map.containsKey(x)) {
+                    map.put(x, new TreeMap < > ());
+                }
+                if (!map.get(x).containsKey(y)) {
+                    map.get(x).put(y, new PriorityQueue < > ());
+                }
+                map.get(x).get(y).offer(m.node.val);
+
+                if(m.node.left!=null){ queue.add(new Model(m.node.left, m.distance-1,m.level+1));}
+                if(m.node.right!=null){ queue.add(new Model(m.node.right, m.distance+1,m.level+1));}
+
+            }
+
+
+        }
+
+         for (TreeMap < Integer, PriorityQueue < Integer >> ys: map.values()) {
+            ll.add(new ArrayList < > ());
+            for (PriorityQueue < Integer > nodes: ys.values()) {
+                while (!nodes.isEmpty()) {
+                    ll.get(ll.size() - 1).add(nodes.poll());
+                }
+            }
+        }
+
+        return ll;
+
+
+        
+    }
+}
+class Model{
+    TreeNode node;
+    int distance;
+    int level;
+    
+    Model(TreeNode node, int distance, int level){
+        this.node=node;
+        this.distance=distance;
+        this.level=level;
+    }
+
+
+}
